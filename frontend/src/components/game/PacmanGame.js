@@ -121,7 +121,62 @@ const PacmanGame = ({ onClose }) => {
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [handleKeyDown]);
 
-    return null;
+    const resetGame = () => {
+        setMap(JSON.parse(JSON.stringify(INITIAL_MAP)));
+        setPacman(INITIAL_PACMAN);
+        setGhosts(INITIAL_GHOSTS);
+        setScore(0);
+        setGameOver(false);
+        setWin(false);
+        setDirection({ x: 0, y: 0 });
+    };
+
+    return (
+        <div className="pacman-overlay">
+            <div className="pacman-modal">
+                <div className="game-header">
+                    <h2>PAC-MAN MINI</h2>
+                    <p>Score: {score}</p>
+                    <button onClick={onClose} className="btn-close">X</button>
+                </div>
+
+                <div className="game-board">
+                    {map.map((row, y) => (
+                        <div key={y} className="row">
+                            {row.map((cell, x) => {
+                                let className = 'cell ';
+                                if (cell === WALL) className += 'wall';
+                                if (cell === DOT) className += 'dot';
+
+                                // Render Entities
+                                if (pacman.x === x && pacman.y === y) return <div key={x} className="cell pacman">C</div>;
+                                const ghost = ghosts.find(g => g.x === x && g.y === y);
+                                if (ghost) return <div key={x} className={`cell ghost ${ghost.color}`}>👻</div>;
+
+                                return <div key={x} className={className}></div>;
+                            })}
+                        </div>
+                    ))}
+                </div>
+
+                {gameOver && (
+                    <div className="game-status lose">
+                        <h3>GAME OVER</h3>
+                        <button onClick={resetGame}>Try Again</button>
+                    </div>
+                )}
+
+                {win && (
+                    <div className="game-status win">
+                        <h3>YOU WIN!</h3>
+                        <button onClick={resetGame}>Play Again</button>
+                    </div>
+                )}
+
+                <div className="controls-hint">Use Arrow Keys to Move</div>
+            </div>
+        </div>
+    );
 };
 
 export default PacmanGame;
