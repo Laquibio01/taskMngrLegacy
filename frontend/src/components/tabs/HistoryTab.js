@@ -1,15 +1,28 @@
-import React, { useState } from 'react';
-import { historyService } from '../../services/api';
+import React, { useState, useEffect } from 'react';
+import { historyService, taskService } from '../../services/api';
 import './HistoryTab.css';
 
 const HistoryTab = () => {
   const [taskId, setTaskId] = useState('');
+  const [tasks, setTasks] = useState([]);
   const [history, setHistory] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  const loadTasks = async () => {
+    try {
+      const data = await taskService.getAll();
+      setTasks(data);
+    } catch (error) {
+      console.error('Error loading tasks:', error);
+    }
+  };
+
   const handleLoadHistory = async () => {
     if (!taskId) {
-      alert('ID de tarea requerido');
       return;
     }
 
@@ -25,8 +38,16 @@ const HistoryTab = () => {
     }
   };
 
+  // Load history when task changes
+  useEffect(() => {
+    if (taskId) {
+      handleLoadHistory();
+    }
+  }, [taskId]);
+
   const handleLoadAllHistory = async () => {
     setLoading(true);
+    setTaskId(''); // Clear specific task selection
     try {
       const data = await historyService.getAll(100);
       setHistory(data);
@@ -44,17 +65,24 @@ const HistoryTab = () => {
 
       <div className="form-section">
         <div className="form-group">
-          <label>ID Tarea:</label>
-          <input
-            type="text"
+          <label>Filtrar por Tarea:</label>
+          <select
             value={taskId}
             onChange={(e) => setTaskId(e.target.value)}
-            placeholder="Ingresa el ID de la tarea"
-          />
+            className="task-select"
+          >
+            <option value="">-- Ver Todas las Tareas (Recientes) --</option>
+            {tasks.map(task => (
+              <option key={task._id} value={task._id}>
+                {task.title}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="button-group">
-          <button onClick={handleLoadHistory} className="btn-primary">Cargar Historial</button>
-          <button onClick={handleLoadAllHistory} className="btn-secondary">Cargar Todo el Historial</button>
+          {!taskId && (
+            <button onClick={handleLoadAllHistory} className="btn-secondary">Recargar Todos</button>
+          )}
         </div>
       </div>
 
@@ -68,7 +96,7 @@ const HistoryTab = () => {
             {history.map(entry => (
               <div key={entry._id} className="history-item">
                 <div className="history-header">
-                  <strong>Tarea #{entry.taskId?.title || entry.taskId}</strong>
+                  <strong>Tarea: {entry.taskId?.title || entry.taskId || 'General/Eliminada'}</strong>
                   <span className="history-date">
                     {new Date(entry.createdAt).toLocaleString()}
                   </span>

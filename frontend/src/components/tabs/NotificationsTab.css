@@ -17,19 +17,19 @@
   margin-bottom: 10px;
   background-color: white;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s;
   border-left: 4px solid transparent;
 }
 
 .notification-item.unread {
-  border-left-color: #000080;
+  border-left-color: var(--primary-color);
   background-color: #f8f9fa;
 }
 
 .notification-item:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .notification-content {
@@ -48,10 +48,25 @@
   color: #495057;
 }
 
-.type-badge.task_assigned { background-color: #cce5ff; color: #004085; }
-.type-badge.task_completed { background-color: #d4edda; color: #155724; }
-.type-badge.task_updated { background-color: #fff3cd; color: #856404; }
-.type-badge.high_priority { background-color: #f8d7da; color: #721c24; }
+.type-badge.task_assigned {
+  background-color: #cce5ff;
+  color: #004085;
+}
+
+.type-badge.task_completed {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.type-badge.task_updated {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.type-badge.high_priority {
+  background-color: #f8d7da;
+  color: #721c24;
+}
 
 .notification-content p {
   margin: 5px 0;

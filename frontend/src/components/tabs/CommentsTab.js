@@ -1,16 +1,30 @@
-import React, { useState } from 'react';
-import { commentService } from '../../services/api';
+import React, { useState, useEffect } from 'react';
+import { commentService, taskService } from '../../services/api';
 import './CommentsTab.css';
 
 const CommentsTab = () => {
   const [taskId, setTaskId] = useState('');
+  const [tasks, setTasks] = useState([]);
   const [commentText, setCommentText] = useState('');
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    loadTasks();
+  }, []);
+
+  const loadTasks = async () => {
+    try {
+      const data = await taskService.getAll();
+      setTasks(data);
+    } catch (error) {
+      console.error('Error loading tasks:', error);
+    }
+  };
+
   const handleLoadComments = async () => {
     if (!taskId) {
-      alert('ID de tarea requerido');
+      alert('Seleccione una tarea');
       return;
     }
 
@@ -26,9 +40,16 @@ const CommentsTab = () => {
     }
   };
 
+  // Auto-load comments when task is selected
+  useEffect(() => {
+    if (taskId) {
+      handleLoadComments();
+    }
+  }, [taskId]);
+
   const handleAddComment = async () => {
     if (!taskId) {
-      alert('ID de tarea requerido');
+      alert('Seleccione una tarea');
       return;
     }
 
@@ -57,13 +78,19 @@ const CommentsTab = () => {
 
       <div className="form-section">
         <div className="form-group">
-          <label>ID Tarea:</label>
-          <input
-            type="text"
+          <label>Tarea:</label>
+          <select
             value={taskId}
             onChange={(e) => setTaskId(e.target.value)}
-            placeholder="Ingresa el ID de la tarea"
-          />
+            className="task-select"
+          >
+            <option value="">-- Seleccionar Tarea --</option>
+            {tasks.map(task => (
+              <option key={task._id} value={task._id}>
+                {task.title}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="form-group">
           <label>Comentario:</label>
@@ -76,7 +103,6 @@ const CommentsTab = () => {
         </div>
         <div className="button-group">
           <button onClick={handleAddComment} className="btn-primary">Agregar Comentario</button>
-          <button onClick={handleLoadComments} className="btn-secondary">Cargar Comentarios</button>
         </div>
       </div>
 
@@ -84,6 +110,8 @@ const CommentsTab = () => {
         <h3>Comentarios</h3>
         {loading ? (
           <div className="loading">Cargando...</div>
+        ) : !taskId ? (
+          <div className="empty-state">Seleccione una tarea para ver sus comentarios</div>
         ) : comments.length === 0 ? (
           <div className="empty-state">No hay comentarios para esta tarea</div>
         ) : (

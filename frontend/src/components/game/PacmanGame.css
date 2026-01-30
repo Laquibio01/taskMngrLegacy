@@ -4,134 +4,144 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.85);
+    background-color: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
+    font-family: 'Courier New', monospace;
 }
 
-.pacman-modal {
-    background: #222;
+.pacman-container {
+    background-color: #000;
+    border: 4px solid #000080;
+    /* Classic Arcade Blue border, not conflict with theme as it's a game */
+    border-radius: 4px;
     padding: 20px;
-    border-radius: 10px;
-    border: 4px solid #10B981;
-    /* Green Theme border */
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
-    text-align: center;
-    color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 128, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .game-header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    width: 100%;
+    color: #fff;
     margin-bottom: 20px;
-}
-
-.game-header h2 {
-    color: #FFD700;
-    margin: 0;
-    font-family: 'Courier New', monospace;
-}
-
-.btn-close {
-    background: #EF4444;
-    color: white;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
+    font-size: 20px;
     font-weight: bold;
-    border-radius: 4px;
 }
 
-.game-board {
-    display: inline-block;
-    background: black;
-    padding: 10px;
-    border: 2px solid #333;
+.score {
+    color: #FFFF00;
 }
 
-.row {
-    display: flex;
+.grid {
+    display: grid;
+    background-color: black;
+    border: 2px solid #1919A6;
 }
 
 .cell {
-    width: 25px;
-    height: 25px;
+    width: 20px;
+    height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .wall {
-    background-color: #0000FF;
-    /* Classic Blue Walls */
+    background-color: #1919A6;
     border-radius: 2px;
 }
 
-.dot::after {
-    content: '';
-    width: 6px;
-    height: 6px;
-    background: white;
+.dot {
+    width: 4px;
+    height: 4px;
+    background-color: #ffb897;
     border-radius: 50%;
 }
 
 .pacman {
-    color: #FFD700;
-    font-weight: bold;
-    font-size: 20px;
-    transform: rotate(0deg);
-    /* Can update based on direction if desired */
+    width: 16px;
+    height: 16px;
+    background-color: #FFFF00;
+    border-radius: 50%;
+    position: relative;
+}
+
+/* Simple mouth animation direction based on rotation handled in JS or mostly static for simplicity/MVP */
+.pacman::after {
+    content: '';
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    width: 50%;
+    height: 20%;
+    background: transparent;
 }
 
 .ghost {
-    font-size: 18px;
+    width: 16px;
+    height: 16px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    position: relative;
 }
 
-.game-status {
+.ghost.red {
+    background-color: #FF0000;
+}
+
+.ghost.pink {
+    background-color: #FFB8FF;
+}
+
+.ghost.cyan {
+    background-color: #00FFFF;
+}
+
+.ghost.orange {
+    background-color: #FFB852;
+}
+
+.game-over {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.9);
-    padding: 30px;
-    border-radius: 8px;
-    border: 2px solid white;
-    animation: popIn 0.3s ease;
-}
-
-@keyframes popIn {
-    from {
-        transform: translate(-50%, -50%) scale(0.5);
-    }
-
-    to {
-        transform: translate(-50%, -50%) scale(1);
-    }
-}
-
-.game-status.lose h3 {
-    color: #EF4444;
-}
-
-.game-status.win h3 {
-    color: #10B981;
-}
-
-.game-status button {
-    background: #10B981;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 10px;
+    color: red;
+    font-size: 48px;
     font-weight: bold;
+    text-shadow: 2px 2px #fff;
+    animation: flash 1s infinite;
+}
+
+.game-win {
+    position: absolute;
+    color: #00FF00;
+    font-size: 48px;
+    font-weight: bold;
+    text-shadow: 2px 2px #fff;
+}
+
+.close-btn {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: white;
+    border: 2px solid #555;
+    cursor: pointer;
+    font-family: inherit;
+    text-transform: uppercase;
+}
+
+.close-btn:hover {
+    background-color: #555;
+    border-color: #777;
 }
 
 .controls-hint {
-    margin-top: 15px;
     color: #888;
+    margin-top: 10px;
     font-size: 12px;
 }

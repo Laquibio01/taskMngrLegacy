@@ -5,7 +5,7 @@
 }
 
 .reports-tab h2 {
-  color: #000080;
+  color: var(--primary-color);
   font-size: 24px;
   margin-bottom: 10px;
 }
@@ -24,7 +24,7 @@
 }
 
 .btn-primary {
-  background-color: #000080;
+  background-color: var(--primary-color);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -36,7 +36,7 @@
 }
 
 .btn-primary:hover {
-  background-color: #0000a0;
+  background-color: var(--primary-hover);
 }
 
 .btn-secondary {

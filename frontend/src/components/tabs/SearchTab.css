@@ -5,7 +5,7 @@
 }
 
 .search-tab h2 {
-  color: #000080;
+  color: var(--primary-color);
   font-size: 24px;
   margin-bottom: 10px;
 }
@@ -49,7 +49,7 @@
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #000080;
+  border-color: var(--primary-color);
 }
 
 .button-group {
@@ -59,7 +59,7 @@
 }
 
 .btn-primary {
-  background-color: #000080;
+  background-color: var(--primary-color);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -71,7 +71,7 @@
 }
 
 .btn-primary:hover {
-  background-color: #0000a0;
+  background-color: var(--primary-hover);
 }
 
 .table-section {
@@ -88,7 +88,7 @@ table {
 }
 
 table th {
-  background-color: #000080;
+  background-color: var(--primary-color);
   color: white;
   padding: 12px;
   text-align: left;
