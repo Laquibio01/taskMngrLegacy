@@ -14,6 +14,7 @@ const KONAMI_CODE = [
 ];
 
 const useKonamiCode = (action) => {
+    // Key detection logic
     const [input, setInput] = useState([]);
 
     return null;
