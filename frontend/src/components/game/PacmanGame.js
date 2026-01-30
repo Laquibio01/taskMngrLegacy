@@ -100,6 +100,22 @@ const PacmanGame = ({ onClose }) => {
         return () => clearInterval(interval);
     }, [direction, map, gameOver, win]);
 
+    // Collision Check & Win Condition
+    useEffect(() => {
+        // Check Collision
+        if (ghosts.some(g => g.x === pacman.x && g.y === pacman.y)) {
+            setGameOver(true);
+        }
+
+        // Check Win
+        let dotsRemaining = 0;
+        map.forEach(row => row.forEach(cell => {
+            if (cell === DOT) dotsRemaining++;
+        }));
+        if (dotsRemaining === 0) setWin(true);
+
+    }, [pacman, ghosts, map]);
+
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
