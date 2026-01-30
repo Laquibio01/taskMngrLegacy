@@ -44,3 +44,48 @@
     font-weight: bold;
     border-radius: 4px;
 }
+
+.game-board {
+    display: inline-block;
+    background: black;
+    padding: 10px;
+    border: 2px solid #333;
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wall {
+    background-color: #0000FF;
+    /* Classic Blue Walls */
+    border-radius: 2px;
+}
+
+.dot::after {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+}
+
+.pacman {
+    color: #FFD700;
+    font-weight: bold;
+    font-size: 20px;
+    transform: rotate(0deg);
+    /* Can update based on direction if desired */
+}
+
+.ghost {
+    font-size: 18px;
+}
