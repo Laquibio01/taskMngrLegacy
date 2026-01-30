@@ -64,6 +64,42 @@ const PacmanGame = ({ onClose }) => {
         }
     }, [gameOver, win]);
 
+    // Game Loop
+    useEffect(() => {
+        if (gameOver || win) return;
+
+        const interval = setInterval(() => {
+            // Move Pacman
+            setPacman(prev => {
+                const next = moveEntity(prev, direction, map);
+
+                // Eat dot
+                if (map[next.y][next.x] === DOT) {
+                    const newMap = [...map];
+                    newMap[next.y][next.x] = EMPTY;
+                    setMap(newMap);
+                    setScore(s => s + 10);
+                }
+                return next;
+            });
+
+            // Move Ghosts (Randomly)
+            setGhosts(prevGhosts => prevGhosts.map(ghost => {
+                const dirs = [{ x: 0, y: 1 }, { x: 0, y: -1 }, { x: 1, y: 0 }, { x: -1, y: 0 }];
+                const validDirs = dirs.filter(d => {
+                    const nx = ghost.x + d.x;
+                    const ny = ghost.y + d.y;
+                    return map[ny] && map[ny][nx] !== WALL;
+                });
+                const dir = validDirs[Math.floor(Math.random() * validDirs.length)] || { x: 0, y: 0 };
+                return moveEntity(ghost, dir, map);
+            }));
+
+        }, 200);
+
+        return () => clearInterval(interval);
+    }, [direction, map, gameOver, win]);
+
     useEffect(() => {
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
