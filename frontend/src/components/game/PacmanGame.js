@@ -52,6 +52,23 @@ const PacmanGame = ({ onClose }) => {
         return entity;
     };
 
+    const handleKeyDown = useCallback((e) => {
+        if (gameOver || win) return;
+
+        switch (e.key) {
+            case 'ArrowUp': setDirection({ x: 0, y: -1 }); break;
+            case 'ArrowDown': setDirection({ x: 0, y: 1 }); break;
+            case 'ArrowLeft': setDirection({ x: -1, y: 0 }); break;
+            case 'ArrowRight': setDirection({ x: 1, y: 0 }); break;
+            default: break;
+        }
+    }, [gameOver, win]);
+
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [handleKeyDown]);
+
     return null;
 };
 
