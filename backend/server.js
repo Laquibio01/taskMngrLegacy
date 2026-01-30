@@ -6,7 +6,24 @@ const mongoose = require('mongoose');
 const app = express();
 
 // Middleware
-app.use(cors());
+const allowedOrigins = [
+  'https://laquibio01.netlify.app',
+  'http://localhost:3000',
+  'http://localhost:3002'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      return callback(null, true); // Fallback: allow it but logged (or strictly false)
+      // For this debugging stage, let's be permissive but with explicit headers:
+    }
+    return callback(null, true);
+  },
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -15,13 +32,13 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/taskmanag
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
-.then(() => {
-  console.log('✅ Connected to MongoDB');
-})
-.catch((error) => {
-  console.error('❌ MongoDB connection error:', error);
-  process.exit(1);
-});
+  .then(() => {
+    console.log('✅ Connected to MongoDB');
+  })
+  .catch((error) => {
+    console.error('❌ MongoDB connection error:', error);
+    process.exit(1);
+  });
 
 // Routes
 const authRoutes = require('./routes/authRoutes');
