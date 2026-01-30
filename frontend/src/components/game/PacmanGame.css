@@ -21,3 +21,26 @@
     text-align: center;
     color: white;
 }
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.game-header h2 {
+    color: #FFD700;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+}
+
+.btn-close {
+    background: #EF4444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 4px;
+}
