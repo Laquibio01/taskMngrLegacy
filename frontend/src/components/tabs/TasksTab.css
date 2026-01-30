@@ -101,56 +101,64 @@
 
 .button-group {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   flex-wrap: wrap;
+  padding-top: 10px;
+  border-top: 1px solid #F3F4F6;
 }
 
 .btn-primary {
-  background-color: #000080;
+  background-color: var(--primary-color);
   color: white;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
-  transition: background-color 0.3s;
+  font-weight: 600;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2);
 }
 
 .btn-primary:hover {
-  background-color: #0000a0;
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
 }
 
 .btn-secondary {
-  background-color: #666;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
+  background-color: white;
+  color: var(--text-secondary);
+  padding: 12px 24px;
+  border: 1px solid #E5E7EB;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
   font-size: 14px;
   font-weight: 500;
-  transition: background-color 0.3s;
+  transition: all 0.2s;
 }
 
 .btn-secondary:hover {
-  background-color: #777;
+  background-color: #F9FAFB;
+  color: var(--text-main);
+  border-color: #D1D5DB;
 }
 
 .btn-danger {
-  background-color: #c33;
-  color: white;
-  padding: 10px 20px;
+  background-color: #FEE2E2;
+  color: #EF4444;
+  padding: 12px 24px;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
-  transition: background-color 0.3s;
+  font-weight: 600;
+  transition: all 0.2s;
 }
 
 .btn-danger:hover {
-  background-color: #d44;
+  background-color: #FECACA;
+  color: #DC2626;
 }
 
 .table-section {
