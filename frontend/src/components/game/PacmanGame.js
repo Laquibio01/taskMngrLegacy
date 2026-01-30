@@ -36,6 +36,22 @@ const PacmanGame = ({ onClose }) => {
     const [win, setWin] = useState(false);
     const [direction, setDirection] = useState({ x: 0, y: 0 });
 
+    const moveEntity = (entity, dir, currentMap) => {
+        const newX = entity.x + dir.x;
+        const newY = entity.y + dir.y;
+
+        if (
+            newX >= 0 &&
+            newX < BOARD_SIZE &&
+            newY >= 0 &&
+            newY < BOARD_SIZE &&
+            currentMap[newY][newX] !== WALL
+        ) {
+            return { x: newX, y: newY };
+        }
+        return entity;
+    };
+
     return null;
 };
 
