@@ -28,6 +28,14 @@ const INITIAL_MAP = [
 ];
 
 const PacmanGame = ({ onClose }) => {
+    const [map, setMap] = useState(JSON.parse(JSON.stringify(INITIAL_MAP)));
+    const [pacman, setPacman] = useState(INITIAL_PACMAN);
+    const [ghosts, setGhosts] = useState(INITIAL_GHOSTS);
+    const [score, setScore] = useState(0);
+    const [gameOver, setGameOver] = useState(false);
+    const [win, setWin] = useState(false);
+    const [direction, setDirection] = useState({ x: 0, y: 0 });
+
     return null;
 };
 
