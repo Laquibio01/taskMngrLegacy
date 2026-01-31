@@ -28,7 +28,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Database connection
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/taskmanager', {
+const mongoUri = process.env.MONGODB_URI;
+
+if (!mongoUri) {
+  console.error('⚠️ FATAL: MONGODB_URI environment variable is not set!');
+  console.error('⚠️ Attempts to connect to localhost will fail in production.');
+} else {
+  console.log('✅ MONGODB_URI is set (connecting to remote database...)');
+}
+
+mongoose.connect(mongoUri || 'mongodb://localhost:27017/taskmanager', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
