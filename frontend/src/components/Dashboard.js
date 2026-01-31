@@ -13,11 +13,15 @@ import PacmanGame from './game/PacmanGame';
 const Dashboard = ({ user, onLogout }) => {
   const [activeTab, setActiveTab] = useState('tasks');
   const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   // Easter Egg Trigger
   useKonamiCode(() => {
     setShowEasterEgg(true);
   });
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+  const closeSidebar = () => setIsSidebarOpen(false);
 
   const tabs = [
     { id: 'tasks', label: 'Tareas', icon: '📝' },
@@ -42,14 +46,20 @@ const Dashboard = ({ user, onLogout }) => {
     }
   };
 
+  const activeTabLabel = tabs.find(t => t.id === activeTab)?.label;
+
   return (
     <div className="dashboard-container">
       {/* Easter Egg Overlay */}
       {showEasterEgg && <PacmanGame onClose={() => setShowEasterEgg(false)} />}
 
-      <aside className="sidebar">
+      {/* Mobile Overlay */}
+      {isSidebarOpen && <div className="sidebar-overlay" onClick={closeSidebar}></div>}
+
+      <aside className={`sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <h1 className="app-title">Task Mngr</h1>
+          <button className="close-sidebar-btn" onClick={closeSidebar}>×</button>
           <div className="user-profile">
             <div className="avatar">{user.username.charAt(0).toUpperCase()}</div>
             <div className="user-info">
@@ -64,7 +74,10 @@ const Dashboard = ({ user, onLogout }) => {
             <button
               key={tab.id}
               className={`nav-item ${activeTab === tab.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={() => {
+                setActiveTab(tab.id);
+                closeSidebar(); // Close on selection (mobile)
+              }}
             >
               <span className="icon">{tab.icon}</span>
               <span className="label">{tab.label}</span>
@@ -81,7 +94,12 @@ const Dashboard = ({ user, onLogout }) => {
 
       <main className="main-content">
         <header className="content-header">
-          <h2>{tabs.find(t => t.id === activeTab)?.label}</h2>
+          <div className="header-left">
+            <button className="menu-toggle" onClick={toggleSidebar}>
+              ☰
+            </button>
+            <h2>{activeTabLabel}</h2>
+          </div>
           <div className="header-actions">
             {/* Toolbar */}
           </div>
