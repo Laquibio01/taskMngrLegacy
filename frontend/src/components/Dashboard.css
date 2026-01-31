@@ -173,6 +173,14 @@
   padding: 40px;
 }
 
+
+/* Desktop Defaults (Base Styles) */
+.menu-toggle,
+.close-sidebar-btn,
+.sidebar-overlay {
+  display: none;
+}
+
 /* Mobile Responsive Styles */
 @media (max-width: 768px) {
   .dashboard-container {
@@ -255,12 +263,7 @@
   }
 }
 
-/* Desktop Defaults */
-.menu-toggle,
-.close-sidebar-btn,
-.sidebar-overlay {
-  display: none;
-}
+
 
 @keyframes fadeIn {
   from {
